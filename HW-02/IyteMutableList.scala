@@ -3,8 +3,8 @@
  * */
 
 class IyteMutableList {
-  private var head: Node = IyteMutableList.newNode; // initialize head
-  private var tail: Node = IyteMutableList.newNode; // initialize tail
+  private var head: Node = null;
+  private var tail: Node = null;
 
   // add x to list
   def add(x: Int) {
@@ -55,5 +55,5 @@ class IyteMutableList {
 }
 
 object IyteMutableList {
-  var newNode: Node = null;
+  def apply() = new IyteMutableList();
 }

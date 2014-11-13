@@ -3,7 +3,7 @@
  * */
 
 class IyteImmutableList(val list: Node) {
-  val head: Node = IyteImmutableList.init(list); // initialize head node
+  val head: Node = list;
 
   def this() { //if user don't pass a node than assume it null
     this(null);
@@ -38,7 +38,5 @@ class IyteImmutableList(val list: Node) {
 
 object IyteImmutableList {
 
-  def init(list: Node): Node = {
-    list;
-  }
+  def apply(list:Node) = new IyteMutableList();
 }
