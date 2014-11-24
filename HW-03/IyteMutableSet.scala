@@ -6,7 +6,7 @@ class IyteMutableSet {
 
   private val set: Set = new Set();
 
-  def add(x: Int) {
+  def add(x: Int): Unit = {
     set.add(x);
   }
 
