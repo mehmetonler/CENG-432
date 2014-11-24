@@ -8,10 +8,6 @@ class IyteImmutableSet(nSet: Set){
   def this(){
     this(new Set());
   }
-  private def this(newSet:Set,newValue:Int){
-    this(newSet);
-    set.add(newValue);    
-  }
 
   def add(x: Int): IyteImmutableSet = {
     new IyteImmutableSet(new Set(set,x));

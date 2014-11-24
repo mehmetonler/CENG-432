@@ -3,7 +3,7 @@
  */
 
 class IyteMutableSet {
-  
+
   private val set: Set = new Set();
 
   def add(x: Int) {

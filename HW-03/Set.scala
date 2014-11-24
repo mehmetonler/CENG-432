@@ -48,8 +48,9 @@ class Set() {
    * 		otherwise continue to process
    * Then, call the contain function
    * 	'contain' function return a tuple (Boolean,Int)
-   *  		Boolean -> is there a element equal to 'value' or not
-   *    	Int		-> if so then return -2, otherwise return
+   *  		tuple can be (true,-2) which means value already exist or (false,some integer number) which means value do not exist we should add it
+   *    if ._1 false then call the shiftElementsToAddNew function in order to add new element
+   *    otherwise do nothing
    */
   def add(value: Int): Unit = {
     if (data.length - 1 == lastIndex) {
@@ -73,6 +74,11 @@ class Set() {
     }
   }
 
+  /**
+   * create new tempArray with 2*size of existent array
+   * then copy all element from existent array to tempArray
+   * and finally assign tempArray to existent array
+   */
   def increaseSizeOf(): Unit = {
     var tempArray: Array[Int] = new Array[Int](data.length * 2);
 
@@ -82,6 +88,14 @@ class Set() {
     data = tempArray;
   }
 
+  /**
+   * @param index
+   * @param value
+   *
+   * This function start to shifting from lastIndex to @param index
+   * Then assign @param value to data(index)
+   * then increase lastIndex by 1
+   */
   def shiftElementsToAddNew(index: Int, value: Int): Unit = {
     for (i <- lastIndex to index by -1) {
       data(i + 1) = data(i);
@@ -90,34 +104,52 @@ class Set() {
     lastIndex = lastIndex + 1;
   }
 
+  /**
+   * @param value Int
+   * if value exist then return (true,-2)
+   * else return (false,index) index: where should program set 'value'
+   */
   def contain(value: Int): (Boolean, Int) = {
     val temp: Int = whereTo(value);
     if (temp == -2) {
       return (true, temp);
-    } else if (temp != -1) {
+    } else if (temp >= 0) {
       if (data(temp) == value) {
-        return (true, temp);
+        return (true, -2);
       } else if (temp >= 1 && data(temp - 1) == value) {
-        return (true, temp - 1);
+        return (true, -2);
       }
     }
     return (false, temp);
   }
 
+  /**
+   * @param value
+   * This function basically search for 'value'
+   * 	if it is exist than return -2
+   *  	else return where to put 'value' in the array
+   *
+   * assign lastIndex to top
+   * assign 0 to bottom
+   * then start the loop until top bigger than bottom plus one
+   * 	create middle variable with top and bottom values
+   *  	if variable at middle index of data equal to value then return -2
+   *    else if variable at middle index of data smaller than value then bottom equal to middle
+   *    else top equal to middle
+   *    when loop end return top
+   */
   def whereTo(value: Int): Int = {
-
     var top: Int = lastIndex;
     var bottom: Int = 0;
 
     while (top > bottom + 1) {
-      var mid: Int = ((top - bottom) / 2) + bottom;
-
-      if (data(mid) == value) {
+      var middle: Int = ((top - bottom) / 2) + bottom;
+      if (data(middle) == value) {
         return -2;
-      } else if (data(mid) < value) {
-        bottom = mid;
+      } else if (data(middle) < value) {
+        bottom = middle;
       } else {
-        top = mid;
+        top = middle;
       }
     }
     top;
@@ -125,11 +157,14 @@ class Set() {
 
   override def toString(): String = {
     var s: String = "";
-    for (i <- 0 to lastIndex) {
-      s = s + data(i) + ",";
+    if (lastIndex == -1) {
+      return "<<Empty Set>>"
+    } else {
+      for (i <- 0 to lastIndex) {
+        s = s + data(i) + ",";
+      }
+      s.dropRight(1);
     }
-    s;
-
   }
 
   object Set {
