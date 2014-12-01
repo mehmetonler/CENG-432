@@ -1,3 +1,7 @@
+/*
+ * Created by Mehmet ONLER on 01.12.2014
+ */
+
 import scala.util.Random
 
 object test extends App {

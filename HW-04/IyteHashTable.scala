@@ -1,3 +1,6 @@
+/*
+ * Created by Mehmet ONLER on 01.12.2014
+ */
 class IyteHashTable(val s: Int) {
   private var capacity: Int = s; // define capacity of array, if it's not specify, it's 64000 as a default value; 
   private var count: Int = 0; // count is always start as 0,
