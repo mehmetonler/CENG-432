@@ -2,6 +2,9 @@
  * Created by Mehmet ONLER on 15.12.2014
  */
 
+import scala.Option.option2Iterable
+import scala.annotation.migration
+
 case class User(name: String, email: String, grade: Int);
 
 trait UserManagerTrait {
@@ -14,23 +17,54 @@ trait UserManagerTrait {
 object UserManager extends UserManagerTrait {
   val dataSet = collection.mutable.Set[User]();
 
+  /**
+   * @param name : String
+   * @param email : String
+   * @param grade : Int
+   * @return Option [User]
+   *
+   * check if the given email exist or not
+   * create tempUser with given parameter
+   * if not, add the tempUser to Set and return tempUser
+   * if exist then return None
+   */
   def add(name: String, email: String, grade: Int): Option[User] = {
-    val tempUser = User(name, email, grade);
-    if (dataSet.find((u:User) => u.email == tempUser.email).size == 0) {
-    	dataSet += tempUser;    	 
-    	Option(tempUser);
-    	
+    if (!dataSet.exists(u => u.email == email)) {
+      val tempUser = User(name, email, grade);
+      dataSet += tempUser;
+      Option(tempUser);
     } else {
-    	None;
+      None;
     }
-   
   }
+
+  /**
+   * @param email : String
+   * @return Option [User]
+   *
+   * apply find function on Set if found given email return the User
+   */
   def getUser(email: String): Option[User] = {
     dataSet.find(u => u.email == email);
   }
+
+  /**
+   * @param grade : Int
+   * @return List [User]
+   * apply filter function on set, get the set with given grade
+   * convert set to List with toList and return it
+   */
   def getUserListForGrade(grade: Int): List[User] = {
     dataSet.filter(u => u.grade == grade).toList;
   }
+
+  /**
+   * @param gradeSelector :function => Boolean
+   * @return List [String]
+   * apply filter with given function
+   * apply map to the result to get name
+   * convert the result to List with toList and return it
+   */
   def getCertainGrades(gradeSelector: (Int) => Boolean): List[String] = {
     dataSet.filter(u => gradeSelector(u.grade)).map(u => u.name).toList;
   }
