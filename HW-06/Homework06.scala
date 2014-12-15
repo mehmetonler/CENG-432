@@ -2,9 +2,6 @@
  * Created by Mehmet ONLER on 15.12.2014
  */
 
-import scala.Option.option2Iterable
-import scala.annotation.migration
-
 case class User(name: String, email: String, grade: Int);
 
 trait UserManagerTrait {
@@ -24,8 +21,8 @@ object UserManager extends UserManagerTrait {
    * @return Option [User]
    *
    * check if the given email exist or not
-   * create tempUser with given parameter
    * if not, add the tempUser to Set and return tempUser
+   * create tempUser with given parameter
    * if exist then return None
    */
   def add(name: String, email: String, grade: Int): Option[User] = {
@@ -51,6 +48,7 @@ object UserManager extends UserManagerTrait {
   /**
    * @param grade : Int
    * @return List [User]
+   *
    * apply filter function on set, get the set with given grade
    * convert set to List with toList and return it
    */
@@ -61,6 +59,7 @@ object UserManager extends UserManagerTrait {
   /**
    * @param gradeSelector :function => Boolean
    * @return List [String]
+   *
    * apply filter with given function
    * apply map to the result to get name
    * convert the result to List with toList and return it
